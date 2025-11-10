@@ -56,3 +56,25 @@ export const signUp = async (req, res) => {
         session.endSession()
     }
 }
+
+export const updatePerson = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { firstname, lastname, age, employmentStatus } = req.body
+        const updatePerson = await booKeepingModel.findByIdAndUpdate(id, { firstname, lastname, age, employmentStatus }, { new: true })
+        res.status(200).json({ success: true, data: { updatePerson }, message: 'Data successfully updated' })
+    } catch (error) {
+        res.status(404).json({ success: false, message: error.message })
+    }
+
+
+}
+export const deletePerson = async (req, res) => {
+    try {
+        const { id } = req.params
+        const deletePerson = await booKeepingModel.findByIdAndDelete(id)
+        res.status(200).json({ success: true, data: { deletePerson }, message: 'Data successfully deleted' })
+    } catch (error) {
+        res.status(404).json({ success: false, message: error.message })
+    }
+}

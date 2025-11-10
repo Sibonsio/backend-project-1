@@ -14,7 +14,7 @@ await connectDB();
 app.use(errorHandlingMinddleware);
 app.use(express.json());
 app.use(upload.array());
-app.use(booKeepingRoute);
+app.use('/api/v1', booKeepingRoute);
 
 app.listen(process.env.PORT, () => {
     console.log(`The server is running on http://localhost:${process.env.PORT}`)

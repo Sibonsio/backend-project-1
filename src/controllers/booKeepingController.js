@@ -22,7 +22,7 @@ export const getEmployedPeople = async (req, res) => {
     try {
         const getData = await booKeepingModel.find()
         const employedData = getData.filter((person) => {
-            return person.employStatus === 'employed'
+            return person.employmentStatus === 'employed'
         })
         res.status(200).json({ success: true, data: { employedData }, message: 'Data successfully retrieved' })
     } catch (error) {
@@ -34,7 +34,7 @@ export const getUnemployedPeople = async (req, res) => {
     try {
         const getData = await booKeepingModel.find()
         const unemployedData = getData.filter((person) => {
-            return person.employStatus === 'unemployed'
+            return person.employmentStatus === 'unemployed'
         })
         res.status(200).json({ success: true, data: { unemployedData }, message: 'Data successfully retrieved' })
     } catch (error) {
@@ -46,7 +46,8 @@ export const signUp = async (req, res) => {
     session.startTransaction()
     try {
         const { firstname, lastname, age, employmentStatus } = req.body
-        const newPerson = await booKeepingModel.create({ firstname, lastname, age, employmentStatus }, { session })
+        const newPerson = new booKeepingModel({ firstname, lastname, age, employmentStatus: employmentStatus.toLowerCase() })
+        await newPerson.save({ session })
         await session.commitTransaction()
         res.status(200).json({ success: true, data: { newPerson }, message: 'Signed up successfully' })
     } catch (error) {
@@ -61,7 +62,7 @@ export const updatePerson = async (req, res) => {
     try {
         const { id } = req.params
         const { firstname, lastname, age, employmentStatus } = req.body
-        const updatePerson = await booKeepingModel.findByIdAndUpdate(id, { firstname, lastname, age, employmentStatus }, { new: true })
+        const updatePerson = await booKeepingModel.findByIdAndUpdate(id, { firstname, lastname, age, employmentStatus: employmentStatus.toLowerCase() }, { new: true })
         res.status(200).json({ success: true, data: { updatePerson }, message: 'Data successfully updated' })
     } catch (error) {
         res.status(404).json({ success: false, message: error.message })

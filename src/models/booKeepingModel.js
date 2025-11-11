@@ -15,7 +15,7 @@ const booKeepingSchema = mongoose.Schema({
     },
     employmentStatus: {
         type: String,
-        required: [true, 'Employment Status is required'], enum: [employed, unemployed]
+        required: [true, 'Employment Status is required'], enum: ["employed", "unemployed"]
     },
 }, { timestamps: true, versionKey: false })
 

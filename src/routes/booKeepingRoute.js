@@ -1,5 +1,5 @@
 import Router from "express";
-import { getAllPeople, getPerson, getEmployedPeople, getUnemployedPeople, signUp, updatePerson, deletePerson } from "../controllers/booKeepingController";
+import { getAllPeople, getPerson, getEmployedPeople, getUnemployedPeople, signUp, updatePerson, deletePerson } from "../controllers/booKeepingController.js";
 
 const booKeepingRoute = Router();
 

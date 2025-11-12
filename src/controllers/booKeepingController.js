@@ -52,7 +52,8 @@ export const signUp = async (req, res) => {
         res.status(200).json({ success: true, data: { newPerson }, message: 'Signed up successfully' })
     } catch (error) {
         await session.abortTransaction()
-        res.status(404).json({ success: false, message: error.message })
+        res.status(404).json({ success: false, message: 'Submission Error' })
+
     } finally {
         session.endSession()
     }

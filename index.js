@@ -4,9 +4,13 @@ import connectDB from './src/config/db.js';
 import errorHandlingMinddleware from './src/middleware/errorHandlingMinddleware.js';
 import multer from 'multer';
 import booKeepingRoute from './src/routes/booKeepingRoute.js';
+import cors from 'cors'
 
 const app = express();
 const upload = multer();
+const corsOptions = {
+    origin: 'http://localhost:5173/'
+}
 
 dotenv.config({ path: ".env" })
 await connectDB();
@@ -14,6 +18,7 @@ await connectDB();
 app.use(errorHandlingMinddleware);
 app.use(express.json());
 app.use(upload.array());
+app.use(cors(corsOptions))
 app.use('/api/v1', booKeepingRoute);
 
 app.listen(process.env.PORT, () => {
